@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Sathya Vigilance Authority</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- =========================
+         HOME PAGE
+    ========================== -->
+
+    <section id="homePage" class="page home-page">
+
+        <div class="top-bar">
+            <span>🇮🇳 REPUBLIC OF SADHYA</span>
+            <span>CASE NO: SVA-000420</span>
+        </div>
+
+        <div class="authority-stamp">
+            🚨 OFFICIAL SADHYA INSPECTION PORTAL
+        </div>
+
+        <h1>
+            SADHYA<br>
+            VIGILANCE<br>
+            AUTHORITY
+        </h1>
+
+        <p class="tagline">
+            We watch banana leaves.<br>
+            We judge their decisions.
+        </p>
+
+        <div class="warning-card">
+            <div class="warning-icon">⚠️</div>
+
+            <div>
+                <strong>PUBLIC NOTICE</strong>
+
+                <p>
+                    Improper placement of Sadhya items
+                    may result in severe disappointment.
+                </p>
+            </div>
+        </div>
+
+        <button id="startButton" class="main-button">
+            START LEAF INSPECTION 🚨
+        </button>
+
+        <div class="fake-stats">
+
+            <div class="stat">
+                <strong>12,847</strong>
+                <span>Leaves Investigated</span>
+            </div>
+
+            <div class="stat">
+                <strong>93%</strong>
+                <span>Found Suspicious</span>
+            </div>
+
+            <div class="stat">
+                <strong>0</strong>
+                <span>Lives Improved</span>
+            </div>
+
+        </div>
+
+        <div class="floating-food food-one">🍌</div>
+        <div class="floating-food food-two">🍚</div>
+        <div class="floating-food food-three">🥥</div>
+        <div class="floating-food food-four">🚨</div>
+
+        <p class="disclaimer">
+            *This authority has absolutely no legal authority whatsoever.
+        </p>
+
+    </section>
+
+
+    <!-- =========================
+         UPLOAD PAGE
+    ========================== -->
+
+    <section id="uploadPage" class="page upload-page">
+
+        <div class="upload-header">
+
+            <div class="official-label">
+                SVA • FOOD INSPECTION UNIT
+            </div>
+
+            <h2>
+                SUBMIT YOUR<br>
+                SADHYA
+            </h2>
+
+            <p>
+                Upload photographic evidence for official investigation.
+            </p>
+
+        </div>
+
+
+        <!-- Upload box -->
+
+        <div class="upload-box">
+
+            <div class="upload-icon">
+                📸
+            </div>
+
+            <h3>
+                Upload Sadhya Evidence
+            </h3>
+
+            <p>
+                Please provide one clear photo of your banana leaf.
+            </p>
+
+
+            <input
+                type="file"
+                id="photoInput"
+                accept="image/*"
+                hidden
+            >
+
+            <label for="photoInput" class="choose-button">
+                📁 CHOOSE SADHYA PHOTO
+            </label>
+
+            <div class="upload-warning">
+                ⚠️ Blurry photos may result in incorrect governmental judgement.
+            </div>
+
+        </div>
+
+
+        <!-- Image preview -->
+
+        <div id="previewArea" class="preview-area">
+
+            <div class="preview-title">
+                📂 EVIDENCE RECEIVED
+            </div>
+
+            <img
+                id="imagePreview"
+                src=""
+                alt="Sadhya Preview"
+            >
+
+            <button
+                id="inspectButton"
+                class="inspect-button"
+            >
+                🔍 INSPECT THIS SADHYA
+            </button>
+
+            <button
+                id="changeButton"
+                class="change-button"
+            >
+                ↩ Choose another photo
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         ANALYSIS PAGE
+    ========================== -->
+
+    <section id="analysisPage" class="page analysis-page">
+
+        <div class="analysis-card">
+
+            <div class="scanner-icon">
+                🔍
+            </div>
+
+            <h2>
+                SADHYA UNDER INVESTIGATION
+            </h2>
+
+            <p>
+                Our highly unnecessary inspection department
+                is examining your banana leaf.
+            </p>
+
+            <div class="progress-container">
+                <div id="progressBar" class="progress-bar"></div>
+            </div>
+
+            <div id="analysisPercentage" class="analysis-percentage">
+                0%
+            </div>
+
+            <div class="analysis-log">
+
+                <p>🟢 Detecting suspicious food objects...</p>
+                <p>🟢 Measuring banana leaf discipline...</p>
+                <p>🟡 Consulting imaginary Sadhya regulations...</p>
+                <p>🔴 Preparing completely unnecessary verdict...</p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         RESULT PAGE
+    ========================== -->
+
+    <section id="resultPage" class="page result-page">
+
+        <div class="result-card">
+
+            <div class="result-stamp">
+                🚨 OFFICIAL SVA VERDICT
+            </div>
+
+            <h2>
+                AUDIT<br>
+                COMPLETE
+            </h2>
+
+            <div class="score-circle">
+
+                <span id="score">
+                    63
+                    <small>%</small>
+                </span>
+
+            </div>
+
+            <div class="score-label">
+                LEAF COMPLIANCE SCORE
+            </div>
+
+
+            <div class="result-list">
+
+                <div class="result-item correct">
+                    <span>🟢</span>
+                    <span>Rice</span>
+                    <span>CORRECT</span>
+                </div>
+
+                <div class="result-item correct">
+                    <span>🟢</span>
+                    <span>Avial</span>
+                    <span>CORRECT</span>
+                </div>
+
+                <div class="result-item wrong">
+                    <span>🔴</span>
+                    <span>Pickle</span>
+                    <span>VIOLATION</span>
+                </div>
+
+                <div class="result-item warning">
+                    <span>🟡</span>
+                    <span>Pappadam</span>
+                    <span>SUSPICIOUS</span>
+                </div>
+
+            </div>
+
+
+            <div class="verdict">
+
+                <strong>FINAL VERDICT</strong>
+
+                <p>
+                    Your Sadhya has been placed under
+                    moderate suspicion. The pickle requires
+                    further investigation. 😭
+                </p>
+
+            </div>
+
+
+            <button
+                id="appealButton"
+                class="appeal-button"
+            >
+                ⚖️ APPEAL THIS DECISION
+            </button>
+
+            <p class="result-disclaimer">
+                Appeal department currently unavailable.
+                Please try never.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
