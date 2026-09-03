@@ -1,4 +1,4 @@
-from rules import PLACEMENT_RULES
+from backend.rules import PLACEMENT_RULES
 
 
 def get_zone(x, y, width=1000, height=700):
