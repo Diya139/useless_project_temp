@@ -2,34 +2,34 @@
 
 
 
-# [Project Name] 🎯
+# [SADHYA VIGILANCE COMMITTEE] 🎯
 
 
 ## Basic Details
-### Team Name: [Name]
+### Team Name: [404 STACK]
 
 
 ### Team Members
-- Team Lead: [Name] - [College]
-- Member 2: [Name] - [College]
-- Member 3: [Name] - [College]
+- Team Lead: [ARYA NEERAJ] - [MEC THRIKKAKARA]
+- Member 2: [DIYA JINS] - [MEC THRIKKAKARA]
+
 
 ### Project Description
-[2-3 lines about what your project does]
+[Sadhya Vigilance Committee is a hilariously judgmental AI tool that takes a photo of your banana leaf feast, points out every single misplaced dish, and ruthlessly scores your Sadhya setup]
 
 ### The Problem (that doesn't exist)
-[What ridiculous problem are you solving?]
+[Humanity has survived thousands of years eating 20-item leaf feasts just fine, making it a critical emergency that nobody is grading your plating accuracy out of 100. Food is currently being digested without an AI model screaming at you because your Upperi is three centimeters off from the sacred leaf tip.]
 
 ### The Solution (that nobody asked for)
-[How are you solving it? Keep it fun!]
+[Instead of just eating your lunch while it’s hot, you now have to whip out your phone, snap a picture, and wait anxiously while an AI inspects your banana leaf to see if you've disgraced your ancestors. It aggressively grades your plating, flags imaginary coordinate crimes, and ensures your Upperi never gets eaten without software officially giving you a disappointing score.]
 
 ## Technical Details
 ### Technologies/Components Used
 For Software:
-- [Languages used]
+- [PYTHON,JAVASCRIPT,HTML,CSS]
 - [Frameworks used]
 - [Libraries used]
-- [Tools used]
+- [VS CODE,GIT,ENDLESS CUP OF COFFEE]
 
 For Hardware:
 - [List main components]
