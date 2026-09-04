@@ -27,8 +27,9 @@
 ### Technologies/Components Used
 For Software:
 - [PYTHON,JAVASCRIPT,HTML,CSS]
-- [Frameworks used]
-- [Libraries used]
+- [Flask: Backend web framework; creates the /audit API and handles image uploads
+    Flask-CORS: Allows the frontend running on another laptop/origin to communicate with the Flask backend]
+- [Flask, Flask-CORS, Ultralytics, PyTorch,  OpenCV]
 - [VS CODE,GIT,ENDLESS CUP OF COFFEE]
 
 For Hardware:
@@ -39,26 +40,85 @@ For Hardware:
 ### Implementation
 For Software:
 # Installation
-[commands]
+[
+1. Clone the repository
+    git clone <repository-url>
+    cd useless_project_temp
+2. Create a virtual environment
+    python -m venv venv
+
+    Activate it:
+
+    Windows:
+
+    venv\Scripts\activate
+3. Install dependencies
+    pip install -r requirements.txt]
 
 # Run
-[commands]
+[1. Run the backend
+
+From the project root:
+
+    python -m backend.app
+
+    The Flask server will start on port 5000.
+
+2. Run the frontend
+
+    Open:
+
+    frontend/index.html]
 
 ### Project Documentation
 For Software:
 
 # Screenshots (Add at least 3)
-![Screenshot1](Add screenshot 1 here with proper name)
-*Add caption explaining what this shows*
+![![alt text](image.png)]The landing page of Sadhya Auditor where the user can start the inspection.
 
-![Screenshot2](Add screenshot 2 here with proper name)
-*Add caption explaining what this shows*
+![![alt text](image-1.png)]The user uploads a Sadya image and previews it before inspection.
 
-![Screenshot3](Add screenshot 3 here with proper name)
-*Add caption explaining what this shows*
+![![alt text](image-2.png)]The AI-generated Sadya score, detected dishes, violations, roast, and final verdict.
 
 # Diagrams
-![Workflow](Add your workflow/architecture diagram here)
+![USER
+               │
+               ▼
+       ┌───────────────┐
+       │   FRONTEND    │
+       │ HTML/CSS/JS   │
+       └───────┬───────┘
+               │
+         Upload Image
+               │
+               ▼
+       ┌───────────────┐
+       │ FLASK BACKEND │
+       │   /audit API  │
+       └───────┬───────┘
+               │
+               ▼
+       ┌───────────────┐
+       │    YOLOE      │
+       │ Dish Detection│
+       └───────┬───────┘
+               │
+               ▼
+       ┌───────────────┐
+       │ SADYA AUDITOR │
+       │ Position Check│
+       └───────┬───────┘
+               │
+               ▼
+       ┌───────────────┐
+       │ Score + Roast │
+       │ + Violations  │
+       └───────┬───────┘
+               │
+               ▼
+       ┌───────────────┐
+       │ RESULT PAGE   │
+       └───────────────┘](Add your workflow/architecture diagram here)
 *Add caption explaining your workflow*
 
 For Hardware:
@@ -82,16 +142,16 @@ For Hardware:
 
 ### Project Demo
 # Video
-[Add your demo video link here]
-*Explain what the video demonstrates*
+[<video controls src="WhatsApp Video 2026-09-04 at 05.53.46.mp4" title="Title"></video>]
+The demo video showcases the complete Sadhya Auditor workflow, from uploading a Sadya image to receiving the AI-generated score, detected dishes, violations, roast, and final verdict.
 
 # Additional Demos
-[Add any extra demo materials/links]
+[github link https://github.com/Diya139/useless_project_temp]
 
 ## Team Contributions
-- [Name 1]: [Specific contributions]
-- [Name 2]: [Specific contributions]
-- [Name 3]: [Specific contributions]
+- [Diya Jins]: [Frontend development, UI design, image upload/preview functionality, result display, and frontend-backend integration.]
+- [Arya Neeraj]: [Backend development, YOLOE-based dish detection, Sadya auditing logic, Flask API, and backend integration.]
+
 
 ---
 Made with ❤️ at TinkerHub Useless Projects 
