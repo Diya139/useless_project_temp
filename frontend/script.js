@@ -1,3 +1,4 @@
+
 // =====================================
 // GET HTML ELEMENTS
 // =====================================
@@ -47,7 +48,7 @@ photoInput.addEventListener("change", function () {
         return;
     }
 
-    // Check if image
+    // Check whether selected file is an image
 
     if (!file.type.startsWith("image/")) {
 
@@ -58,15 +59,13 @@ photoInput.addEventListener("change", function () {
         return;
     }
 
-
-    // Create preview
+    // Create image preview
 
     const imageURL = URL.createObjectURL(file);
 
     imagePreview.src = imageURL;
 
     previewArea.style.display = "block";
-
 
     // Scroll to preview
 
@@ -102,7 +101,7 @@ inspectButton.addEventListener("click", async function () {
 
     const file = photoInput.files[0];
 
-    // Make sure an image exists
+    // Make sure an image was selected
 
     if (!file) {
 
@@ -124,7 +123,7 @@ inspectButton.addEventListener("click", async function () {
     window.scrollTo(0, 0);
 
 
-    // Start visual progress animation
+    // Start progress animation
 
     startAnalysisAnimation();
 
@@ -141,7 +140,7 @@ inspectButton.addEventListener("click", async function () {
         // Send image to Flask backend
 
         const response = await fetch(
-            "http://10.107.203.142:5000/audit",
+            "http://127.0.0.1:5000/audit",
             {
                 method: "POST",
                 body: formData
@@ -154,7 +153,7 @@ inspectButton.addEventListener("click", async function () {
         const result = await response.json();
 
 
-        // Check for backend error
+        // Check backend response
 
         if (!response.ok) {
 
@@ -162,10 +161,14 @@ inspectButton.addEventListener("click", async function () {
                 result.error ||
                 "The Sadya Auditor has malfunctioned."
             );
+
         }
 
 
-        // Show actual result
+        console.log("Backend result:", result);
+
+
+        // Show result
 
         showResult(result);
 
@@ -211,9 +214,9 @@ function startAnalysisAnimation() {
         progress += 1;
 
 
-        // Stop at 95%.
-        // The final 5% is completed when
-        // the backend actually responds.
+        // Stop at 95%
+        // Remaining 5% is completed
+        // after backend response
 
         if (progress >= 95) {
 
@@ -248,7 +251,7 @@ function showResult(result) {
     analysisPercentage.textContent = "100%";
 
 
-    // Small delay so the 100% animation is visible
+    // Small delay so 100% is visible
 
     setTimeout(function () {
 
@@ -259,7 +262,7 @@ function showResult(result) {
         window.scrollTo(0, 0);
 
 
-        // Display backend result
+        // Display actual backend result
 
         displayResult(result);
 
@@ -281,8 +284,13 @@ function displayResult(result) {
     const scoreElement =
         document.getElementById("score");
 
-    scoreElement.innerHTML =
-        `${result.score}<small>%</small>`;
+
+    if (scoreElement) {
+
+        scoreElement.innerHTML =
+            `${result.score}<small>%</small>`;
+
+    }
 
 
     // =================================
@@ -292,87 +300,150 @@ function displayResult(result) {
     const resultList =
         document.querySelector(".result-list");
 
+
+    if (!resultList) {
+
+        console.error(
+            "Could not find .result-list"
+        );
+
+        return;
+
+    }
+
+
+    // Clear old results
+
     resultList.innerHTML = "";
 
 
-    // Create a result card for every dish
+    // =================================
+    // CREATE DISH CARDS
+    // =================================
 
-    result.dishes.forEach(function (dish) {
+    if (result.dishes && result.dishes.length > 0) {
 
-        const item = document.createElement("div");
+        result.dishes.forEach(function (dish) {
 
-        item.classList.add("result-item");
+            const item =
+                document.createElement("div");
 
-
-        // Decide appearance
-
-        if (dish.status === "acceptable") {
-
-            item.classList.add("correct");
-
-        } else if (dish.status === "violation") {
-
-            item.classList.add("wrong");
-
-        } else {
-
-            item.classList.add("warning");
-
-        }
+            item.classList.add("result-item");
 
 
-        // Decide icon and status
+            // Confidence from backend
 
-        let icon = "🟡";
-        let statusText = "SUSPICIOUS";
-
-
-        if (dish.status === "acceptable") {
-
-            icon = "🟢";
-            statusText = "ACCEPTABLE";
-
-        }
+            const confidence =
+                Number(dish.confidence);
 
 
-        if (dish.status === "violation") {
+            // =================================
+            // DECIDE STATUS
+            // =================================
 
-            icon = "🔴";
-            statusText = "VIOLATION";
+            let icon = "🟡";
 
-        }
+            let statusText =
+                "DETECTED";
 
 
-        // Create dish result
+            if (confidence >= 20) {
 
-        item.innerHTML = `
+                icon = "🟢";
 
-            <div class="dish-header">
+                statusText =
+                    "CONFIDENT";
 
-                <span class="dish-icon">
-                    ${icon}
-                </span>
+            }
+            else if (confidence >= 10) {
 
-                <span class="dish-name">
-                    ${dish.name}
-                </span>
+                icon = "🟡";
 
-                <span class="dish-status">
-                    ${statusText}
-                </span>
+                statusText =
+                    "LIKELY";
 
-            </div>
+            }
+            else {
 
-            <div class="dish-roast">
-                ${dish.message}
+                icon = "⚪";
+
+                statusText =
+                    "LOW CONFIDENCE";
+
+            }
+
+
+            // =================================
+            // DISH CARD
+            // =================================
+
+            item.innerHTML = `
+
+                <div class="dish-header">
+
+                    <span class="dish-icon">
+                        ${icon}
+                    </span>
+
+                    <span class="dish-name">
+                        ${capitalizeDishName(dish.name)}
+                    </span>
+
+                    <span class="dish-status">
+                        ${statusText}
+                    </span>
+
+                </div>
+
+                <div class="dish-roast">
+
+                    AI confidence:
+                    ${confidence.toFixed(1)}%
+
+                </div>
+
+            `;
+
+
+            resultList.appendChild(item);
+
+        });
+
+    }
+    else {
+
+        resultList.innerHTML = `
+
+            <div class="result-item warning">
+
+                <div class="dish-header">
+
+                    <span class="dish-icon">
+                        ⚠️
+                    </span>
+
+                    <span class="dish-name">
+                        No dishes detected
+                    </span>
+
+                    <span class="dish-status">
+                        UNKNOWN
+                    </span>
+
+                </div>
+
+                <div class="dish-roast">
+
+                    The AI has temporarily forgotten
+                    what food looks like.
+
+                </div>
+
             </div>
 
         `;
 
-
-        resultList.appendChild(item);
-
-    });
+    }
 
 
     // =================================
@@ -382,35 +453,39 @@ function displayResult(result) {
     const verdictText =
         document.querySelector(".verdict p");
 
-    verdictText.textContent =
-        result.verdict;
+
+    if (verdictText) {
+
+        verdictText.textContent =
+            result.verdict || "No verdict available.";
+
+    }
 
 
     // =================================
-    // DISPLAY VIOLATIONS
+    // VIOLATIONS
     // =================================
 
     let violationsContainer =
         document.querySelector(".violations");
 
 
-    // Create violations section if
-    // it doesn't already exist
+    // Create violations section if needed
 
     if (!violationsContainer) {
 
         violationsContainer =
             document.createElement("div");
 
+
         violationsContainer.classList.add(
             "violations"
         );
 
 
-        // Put violations before verdict
-
         const verdictSection =
             document.querySelector(".verdict");
+
 
         if (verdictSection) {
 
@@ -419,7 +494,8 @@ function displayResult(result) {
                 verdictSection
             );
 
-        } else {
+        }
+        else {
 
             resultPage.appendChild(
                 violationsContainer
@@ -434,25 +510,59 @@ function displayResult(result) {
     // VIOLATION CONTENT
     // =================================
 
-    violationsContainer.innerHTML = `
+    if (
+        result.violations &&
+        result.violations.length > 0
+    ) {
 
-        <h3>🚨 AUDIT VIOLATIONS</h3>
+        violationsContainer.innerHTML = `
 
-        <div class="violation-list">
+            <h3>
+                🚨 AUDIT VIOLATIONS
+            </h3>
 
-            ${result.violations.map(function (violation) {
+            <div class="violation-list">
 
-                return `
-                    <div class="violation-item">
-                        ${violation}
-                    </div>
-                `;
+                ${result.violations.map(function (violation) {
 
-            }).join("")}
+                    return `
 
-        </div>
+                        <div class="violation-item">
 
-    `;
+                            ${violation}
+
+                        </div>
+
+                    `;
+
+                }).join("")}
+
+            </div>
+
+        `;
+
+    }
+    else {
+
+        violationsContainer.innerHTML = `
+
+            <h3>
+                ✅ NO VIOLATIONS
+            </h3>
+
+            <div class="violation-list">
+
+                <div class="violation-item">
+
+                    The Sadya survived the inspection.
+
+                </div>
+
+            </div>
+
+        `;
+
+    }
 
 
     // =================================
@@ -467,22 +577,26 @@ function displayResult(result) {
         scoreLabel =
             "SUSPICIOUSLY COMPETENT";
 
-    } else if (result.score >= 60) {
+    }
+    else if (result.score >= 60) {
 
         scoreLabel =
             "BARELY ACCEPTABLE";
 
-    } else if (result.score >= 40) {
+    }
+    else if (result.score >= 40) {
 
         scoreLabel =
             "SPIRITUALLY QUESTIONABLE";
 
-    } else if (result.score >= 20) {
+    }
+    else if (result.score >= 20) {
 
         scoreLabel =
             "CATASTROPHIC";
 
-    } else {
+    }
+    else {
 
         scoreLabel =
             "ABSOLUTELY COOKED 💀";
@@ -503,6 +617,7 @@ function displayResult(result) {
         scoreLabelElement =
             document.createElement("div");
 
+
         scoreLabelElement.classList.add(
             "score-label"
         );
@@ -510,6 +625,7 @@ function displayResult(result) {
 
         const scoreParent =
             scoreElement.parentElement;
+
 
         if (scoreParent) {
 
@@ -545,6 +661,11 @@ function displayResult(result) {
     );
 
     console.log(
+        "Dishes:",
+        result.dishes
+    );
+
+    console.log(
         "Violations:",
         result.violations
     );
@@ -553,18 +674,57 @@ function displayResult(result) {
 
 
 // =====================================
+// CAPITALIZE DISH NAME
+// =====================================
+
+function capitalizeDishName(name) {
+
+    if (!name) {
+
+        return "Unknown";
+
+    }
+
+    return name
+        .split(" ")
+        .map(function (word) {
+
+            return word.charAt(0).toUpperCase()
+                + word.slice(1);
+
+        })
+        .join(" ");
+
+}
+
+
+// =====================================
 // APPEAL BUTTON
 // =====================================
 
-document
-    .getElementById("appealButton")
-    .addEventListener("click", function () {
+const appealButton =
+    document.getElementById("appealButton");
 
-        alert(
-            "⚖️ APPEAL REJECTED\n\n" +
-            "Your appeal has been reviewed.\n\n" +
-            "Decision: NO.\n\n" +
-            "Reason: The authority said so."
-        );
 
-    });
+if (appealButton) {
+
+    appealButton.addEventListener(
+        "click",
+        function () {
+
+            alert(
+
+                "⚖️ APPEAL REJECTED\n\n" +
+
+                "Your appeal has been reviewed.\n\n" +
+
+                "Decision: NO.\n\n" +
+
+                "Reason: The authority said so."
+
+            );
+
+        }
+    );
+
+}
